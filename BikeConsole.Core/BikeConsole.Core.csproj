@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="12.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Mapper\DTO's\Bike\Request\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BikeConsole.Domain\BikeConsole.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

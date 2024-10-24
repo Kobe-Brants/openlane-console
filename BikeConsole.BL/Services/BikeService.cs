@@ -12,13 +12,10 @@ public class BikeService : IBikeService
         _handlers = handlers;
     }
 
-    public async Task ProcessMessageAsync(BikeAuctionMessage message, CancellationToken cancellationToken)
+    public async Task ProcessMessageAsync(BaseMessage message, CancellationToken cancellationToken)
     {
-        var handler = _handlers.FirstOrDefault(h => h.CanHandle(message.Type));
-        if (handler is null)
-        {
-            throw new Exception($"No handler found for message type: {message.Type}");
-        }
+        var handler = _handlers.FirstOrDefault(h => h.CanHandle(message.Type))
+                      ?? throw new ArgumentException($"No handler found for message type: {message.Type}");
 
         await handler.HandleAsync(message, cancellationToken);
     }

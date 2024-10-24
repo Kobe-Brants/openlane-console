@@ -1,6 +1,6 @@
 namespace BikeConsole.Core.Mapper.DTO_s;
 
-public class BikeAuctionMessage
+public abstract class BaseMessage
 {
     public required string MessageId { get; set; }
 
@@ -10,5 +10,5 @@ public class BikeAuctionMessage
 
     public required string Resource { get; set; }
 
-    public required ResourceData ResourceData { get; set; }
+    public ResourceDataBase ResourceData { get; set; }
 }

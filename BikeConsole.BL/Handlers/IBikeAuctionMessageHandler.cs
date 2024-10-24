@@ -4,6 +4,12 @@ namespace BikeConsole.BL.Handlers;
 
 public interface IBikeAuctionMessageHandler
 {
-    Task HandleAsync(BikeAuctionMessage message, CancellationToken cancellationToken);
+    Task HandleAsync(BaseMessage message, CancellationToken cancellationToken);
     bool CanHandle(string messageType);
+}
+
+public interface IBikeAuctionMessageHandler<TMessage> : IBikeAuctionMessageHandler 
+    where TMessage : BaseMessage
+{
+    Task HandleTypedAsync(TMessage message, CancellationToken cancellationToken);
 }

@@ -1,5 +1,5 @@
 using System.Text.Json;
-using AutoMapper;
+using BikeConsole.BL.Converters;
 using BikeConsole.Core.Mapper.DTO_s.Bike.Response;
 using Microsoft.Extensions.Configuration;
 
@@ -23,6 +23,13 @@ public class BikeApiClient : IBikeApiClient
         response.EnsureSuccessStatusCode();
         
         var json = await response.Content.ReadAsStringAsync(cancellationToken);
-        return JsonSerializer.Deserialize<BikeResponse>(json);
+
+        var options = new JsonSerializerOptions()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Converters = { new FlexibleDateTimeConverter() }
+        };
+        
+        return JsonSerializer.Deserialize<BikeResponse>(json, options);
     }
 }

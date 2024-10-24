@@ -1,12 +1,11 @@
-using BikeConsole.Core.Mapper.DTO_s;
+using BikeConsole.Core.Mapper.DTO_s.Messages;
 
 namespace BikeConsole.BL.Handlers;
 
-public class BikeAuctionPublishedHandler : IBikeAuctionMessageHandler
+public class BikeAuctionPublishedHandler : BaseAuctionMessageHandler<BikeAuctionPublishedMessage>
 {
-    public bool CanHandle(string messageType) => messageType == "BikeAuction.Published";
-
-    public async Task HandleAsync(BikeAuctionMessage message, CancellationToken cancellationToken)
+    public override bool CanHandle(string messageType) => messageType == "BikeAuction.Published";
+    public override Task HandleTypedAsync(BikeAuctionPublishedMessage message, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

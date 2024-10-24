@@ -1,11 +1,11 @@
 using BikeConsole.BL.ApiClients.Bike;
 using BikeConsole.Core.Interfaces.Repositories;
-using BikeConsole.Core.Mapper.DTO_s;
+using BikeConsole.Core.Mapper.DTO_s.Messages;
 using BikeConsole.Domain;
 
 namespace BikeConsole.BL.Handlers;
 
-public class BikeAuctionCreatedHandler : IBikeAuctionMessageHandler
+public class BikeAuctionCreatedHandler : BaseAuctionMessageHandler<BikeAuctionCreatedMessage>
 {
     private readonly IGenericRepository<BikeContainer> _bikeContainerRepository;
     private readonly IBikeApiClient _bikeApiClient;
@@ -16,9 +16,9 @@ public class BikeAuctionCreatedHandler : IBikeAuctionMessageHandler
         _bikeApiClient = bikeApiClient;
     }
 
-    public bool CanHandle(string messageType) => messageType == "BikeAuction.Created";
-
-    public async Task HandleAsync(BikeAuctionMessage message, CancellationToken cancellationToken)
+    public override bool CanHandle(string messageType) => messageType == "BikeAuction.Created";
+    
+    public override async Task HandleTypedAsync(BikeAuctionCreatedMessage message, CancellationToken cancellationToken)
     {
         var bikeContainerId = GetBikeContainerIdFromResourceUrl(message.Resource);
         if (bikeContainerId is null) throw new Exception("BikeContainer not found in resource");
@@ -38,7 +38,7 @@ public class BikeAuctionCreatedHandler : IBikeAuctionMessageHandler
 
         Console.WriteLine($"Bike container {bikeContainerId} published with bike {bikeToAdd.Id}.");
     }
-
+   
     private static string? GetBikeContainerIdFromResourceUrl(string resourceUrl)
     {
         return resourceUrl.Split("/").LastOrDefault();
